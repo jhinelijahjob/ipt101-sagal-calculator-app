@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator App</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+        .calculator {
+            border: 2px solid #888;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #bd2d2d;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #result {
+            width: 86%;
+            padding: 20px;
+            font-size: 24px;
+            text-align: right;
+            border: auto;
+            background-color: #969494;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .button-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .num-btn {
+            width: 23%;
+            padding: 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: #d0ff00;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .num-btn.operator {
+            background-color: #f39c12;
+        }
+        .num-btn:active {
+            background-color: #2e7d32;
+        }
+        .num-btn.operator:active {
+            background-color: #e67e22;
+        }
+        h1 {
+            text-align: center;
+            color: #000000;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h1>Calculator App</h1>
+        <input type="text" id="result" disabled>
+        
+        <div class="button-row">
+            <input type="button" class="num-btn" value="1" onclick="appendNumber(1)">
+            <input type="button" class="num-btn" value="2" onclick="appendNumber(2)">
+            <input type="button" class="num-btn" value="3" onclick="appendNumber(3)">
+            <input type="button" class="num-btn operator" value="+" onclick="appendOperator('+')">
+        </div>
+        
+        <div class="button-row">
+            <input type="button" class="num-btn" value="4" onclick="appendNumber(4)">
+            <input type="button" class="num-btn" value="5" onclick="appendNumber(5)">
+            <input type="button" class="num-btn" value="6" onclick="appendNumber(6)">
+            <input type="button" class="num-btn operator" value="-" onclick="appendOperator('-')">
+        </div>
+        
+        <div class="button-row">
+            <input type="button" class="num-btn" value="7" onclick="appendNumber(7)">
+            <input type="button" class="num-btn" value="8" onclick="appendNumber(8)">
+            <input type="button" class="num-btn" value="9" onclick="appendNumber(9)">
+            <input type="button" class="num-btn operator" value="*" onclick="appendOperator('*')">
+        </div>
+        
+        <div class="button-row">
+            <input type="button" class="num-btn" value="0" onclick="appendNumber(0)">
+            <input type="button" class="num-btn" value="." onclick="appendDecimal()">
+            <input type="button" class="num-btn operator" value="/" onclick="appendOperator('/')">
+            <input type="button" class="num-btn operator" value="=" onclick="calculate()">
+        </div>
+        
+        <div class="button-row">
+            <input type="button" class="num-btn" value="C" onclick="clearInput()">
+            <input type="button" class="num-btn" value="Del" onclick="deleteLast()">
+        </div>
+    </div>
+
+    <script>
+        let currentInput = '';
+
+        function appendNumber(number) {
+            currentInput += number;
+            updateResult();
+        }
+
+        function appendOperator(operator) {
+            currentInput += operator;
+            updateResult();
+        }
+
+        function appendDecimal() {
+            if (!currentInput.includes('.')) {
+                currentInput += '.';
+                updateResult();
+            }
+        }
+
+        function calculate() {
+            try {
+                const result = eval(currentInput);
+                document.getElementById('result').value = result;
+                currentInput = result.toString();
+            } catch {
+                document.getElementById('result').value = 'Error';
+                currentInput = '';
+            }
+        }
+
+        function clearInput() {
+            currentInput = '';
+            updateResult();
+        }
+
+        function deleteLast() {
+            currentInput = currentInput.slice(0, -1);
+            updateResult();
+        }
+
+        function updateResult() {
+            document.getElementById('result').value = currentInput;
+        }
+    </script>
+</body>
+</html>
